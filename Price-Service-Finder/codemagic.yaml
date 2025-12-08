@@ -1,0 +1,117 @@
+workflows:
+  android-debug:
+    name: CheapSRV Debug APK
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      java: 17
+      node: 18
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+
+      - name: Build web app
+        script: |
+          npm run build
+
+      - name: Sync Capacitor to Android
+        script: |
+          npx cap sync android
+
+      - name: Set Android SDK location
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > android/local.properties
+
+      - name: Build Android Debug APK
+        script: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
+
+  android-release:
+    name: CheapSRV Signed Release APK
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      java: 17
+      node: 18
+      android_signing:
+        - cheapsrv_keystore
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+
+      - name: Build web app
+        script: |
+          npm run build
+
+      - name: Sync Capacitor to Android
+        script: |
+          npx cap sync android
+
+      - name: Set Android SDK location
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > android/local.properties
+
+      - name: Build unsigned release APK
+        script: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Sign APK with Codemagic
+        script: |
+          android-app-bundle sign \
+            --ks "$CM_KEYSTORE_PATH" \
+            --ks-key-alias "$CM_KEY_ALIAS" \
+            --ks-pass "pass:$CM_KEYSTORE_PASSWORD" \
+            --key-pass "pass:$CM_KEY_PASSWORD" \
+            --in android/app/build/outputs/apk/release/app-release-unsigned.apk \
+            --out android/app/build/outputs/apk/release/app-release-signed.apk
+
+      - name: Build unsigned release AAB
+        script: |
+          cd android
+          ./gradlew bundleRelease
+
+      - name: Sign AAB with Codemagic
+        script: |
+          android-app-bundle sign \
+            --ks "$CM_KEYSTORE_PATH" \
+            --ks-key-alias "$CM_KEY_ALIAS" \
+            --ks-pass "pass:$CM_KEYSTORE_PASSWORD" \
+            --key-pass "pass:$CM_KEY_PASSWORD" \
+            --in android/app/build/outputs/bundle/release/app-release.aab \
+            --out android/app/build/outputs/bundle/release/app-release-signed.aab
+
+    artifacts:
+      - android/app/build/outputs/apk/release/app-release-signed.apk
+      - android/app/build/outputs/bundle/release/app-release-signed.aab
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true

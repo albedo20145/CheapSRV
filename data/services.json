@@ -1,0 +1,48 @@
+{
+  "YouTube": [
+    {"id":"yt_subs","name":"YouTube Indian Subscribers","price":"₹3500","tag":"NON-DROP"},
+    {"id":"yt_views","name":"YouTube Views","price":"₹160","tag":"NON-DROP"},
+    {"id":"yt_likes","name":"YouTube Likes","price":"₹130"},
+    {"id":"yt_comments","name":"YouTube Comments","price":"₹900","note":"Max - 1k"},
+    {"id":"yt_shorts","name":"YouTube Shorts Views","price":"₹550","note":"MIN - 100K"}
+  ],
+  "Instagram": [
+    {"id":"ig_ind_foll","name":"Instagram Indian Followers","price":"₹315","guarantee":"Lifetime"},
+    {"id":"ig_real_foll","name":"Instagram Real Followers","price":"₹420","guarantee":"365 days"},
+    {"id":"ig_reels_likes","name":"Instagram Reels Likes","price":"₹150"},
+    {"id":"ig_reels_views","name":"Instagram Reels Views","price":"₹35","tag":"NON-DROP"},
+    {"id":"ig_impr","name":"Instagram Impressions","price":"₹90"},
+    {"id":"ig_comments","name":"Instagram Comments","price":"₹850"},
+    {"id":"ig_saves","name":"Instagram Saves","price":"₹55"},
+    {"id":"ig_reach","name":"Instagram Reach Boost","price":"₹60"}
+  ],
+  "Spotify": [
+    {"id":"sp_foll","name":"Spotify Followers","price":"₹70","tag":"NON-DROP"},
+    {"id":"sp_plays","name":"Spotify Track Plays","price":"₹90"}
+  ],
+  "Netflix": [
+    {"id":"nf_month","name":"Netflix Monthly Subscription","price":"₹130"},
+    {"id":"nf_year","name":"Netflix Annual Subscription","price":"₹1150"},
+    {"id":"nf_priv","name":"Netflix Private Subscription","price":"₹190"}
+  ],
+  "Prime Video": [
+    {"id":"pv_month","name":"Prime Video Monthly","price":"₹120"},
+    {"id":"pv_year","name":"Prime Video Annual","price":"₹1250"}
+  ],
+  "JioHotstar": [
+    {"id":"jh_month","name":"JioHotstar Monthly","price":"₹125"},
+    {"id":"jh_year","name":"JioHotstar Annual","price":"₹1399"}
+  ],
+  "Crunchyroll": [
+    {"id":"cr_month","name":"Crunchyroll Monthly","price":"₹120"},
+    {"id":"cr_year","name":"Crunchyroll Annual","price":"₹450"}
+  ],
+  "Canva Pro": [
+    {"id":"canva_month","name":"Canva Pro Monthly","price":"₹130"},
+    {"id":"canva_year","name":"Canva Pro Annual","price":"₹399"}
+  ],
+  "YouTube Premium": [
+    {"id":"ytprem_month","name":"YouTube Premium Monthly","price":"₹90"},
+    {"id":"ytprem_family","name":"YouTube Premium Family","price":"₹199"}
+  ]
+}
