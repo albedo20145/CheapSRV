@@ -1,0 +1,21 @@
+workflows:
+  android-build-expo:
+    name: Android AAB Build for Play Store
+    instance_type: mac_mini_m1
+    environment:
+      node: latest
+    scripts:
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+      - name: Install dependencies
+        run: npm install
+      - name: Build with EAS
+        run: |
+          eas build --platform android --profile production --non-interactive
+    artifacts:
+      - build-artifacts/aab/*.aab
+    publishing:
+      email:
+        recipients:
+          - hydramagic1@gmail.com 
+          
