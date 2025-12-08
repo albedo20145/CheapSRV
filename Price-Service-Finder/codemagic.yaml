@@ -5,6 +5,8 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       node: 18
+      groups:
+        - MyEASVariables
       # EAS Token: EXPO_TOKEN must be set in Codemagic Environment Variables
     scripts:
       - name: Install EAS CLI
