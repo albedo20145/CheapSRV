@@ -1,21 +1,51 @@
 workflows:
-  android-build-expo:
-    name: Android AAB Build for Play Store
+  # 1. Production Build (Play Store AAB using EAS)
+  android-aab-release:
+    name: Android AAB (Release)
     instance_type: mac_mini_m1
     environment:
-      node: latest
+      node: 18
+      # EAS Token: EXPO_TOKEN must be set in Codemagic Environment Variables
     scripts:
       - name: Install EAS CLI
-        run: npm install -g eas-cli
+        script: npm install -g eas-cli
       - name: Install dependencies
-        run: npm install
+        script: npm install
       - name: Build with EAS
-        run: |
+        script: |
           eas build --platform android --profile production --non-interactive
     artifacts:
       - build-artifacts/aab/*.aab
     publishing:
       email:
         recipients:
-          - hydramagic1@gmail.com 
+          - hydramagic1@gmail.com
+
+  # 2. Debug Build (Testing APK using Gradle)
+  android-debug-apk:
+    name: Android Debug APK
+    instance_type: linux_x2
+    environment:
+      java: 17
+      node: 18
+    scripts:
+      - name: Install npm dependencies
+        script: npm install
+      - name: Build web app
+        script: npm run build
+      - name: Sync Capacitor to Android
+        script: npx cap sync android
+      - name: Set Android SDK location
+        script: echo "sdk.dir=$ANDROID_SDK_ROOT" > android/local.properties
+      - name: Build Android Debug APK
+        script: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
+    publishing:
+      email:
+        recipients:
+          - hydramagic1@gmail.com
           
